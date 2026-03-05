@@ -40,12 +40,39 @@ echo ""
 echo ">>> Step 3: Installing PyTorch 2.x + CUDA 12 ..."
 conda install -y pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia
 
+# DEBUG: Check which torch is being picked up
+python -c "
+import torch
+import sys
+import os
+import json
+import time
+
+log_entry = {
+    'sessionId': 'dcaa02',
+    'timestamp': int(time.time() * 1000),
+    'location': 'setup_h100.sh',
+    'message': 'Checking torch installation',
+    'data': {
+        'torch_version': torch.__version__,
+        'torch_path': torch.__file__,
+        'cuda_available': torch.cuda.is_available(),
+        'cuda_version': torch.version.cuda,
+        'sys_path': sys.path,
+        'hypothesisId': 'A'
+    }
+}
+print(f'DEBUG_LOG: {json.dumps(log_entry)}')
+with open('debug_dcaa02.log', 'a') as f:
+    f.write(json.dumps(log_entry) + '\n')
+"
+
 python -c "import torch; print(f'PyTorch {torch.__version__}, CUDA: {torch.cuda.is_available()}')"
 
 # --- 4. torch_scatter (PyTorch 2.x compatible) ---
 echo ""
 echo ">>> Step 4: Installing torch_scatter ..."
-pip install torch_scatter
+pip install torch_scatter --no-build-isolation
 
 # --- 5. kornia ---
 echo ""
@@ -63,9 +90,9 @@ pip install "$PROJECT_DIR/nvdiffrast" --no-build-isolation
 # --- 7. Custom CUDA extensions ---
 echo ""
 echo ">>> Step 7: Installing custom extensions (simple-knn, bvh, r3dg-rasterization) ..."
-pip install "$PROJECT_DIR/submodules/simple-knn" 2>/dev/null || true
-pip install "$PROJECT_DIR/bvh" 2>/dev/null || true
-pip install "$PROJECT_DIR/r3dg-rasterization" 2>/dev/null || true
+pip install "$PROJECT_DIR/submodules/simple-knn" --no-build-isolation 2>/dev/null || true
+pip install "$PROJECT_DIR/bvh" --no-build-isolation 2>/dev/null || true
+pip install "$PROJECT_DIR/r3dg-rasterization" --no-build-isolation 2>/dev/null || true
 
 # --- 8. Verify ---
 echo ""
