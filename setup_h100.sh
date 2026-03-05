@@ -78,6 +78,9 @@ python -c "import torch; print(f'PyTorch {torch.__version__}, CUDA: {torch.cuda.
 # --- 4. torch_scatter (PyTorch 2.x compatible) ---
 echo ""
 echo ">>> Step 4: Installing torch_scatter ..."
+# Try PyG wheel index for current PyTorch/CUDA, else pip
+# NOTE: torch_scatter build requires pybind11, which might be missing from build env
+pip install pybind11
 pip install torch_scatter --no-build-isolation
 
 # --- 5. kornia ---
