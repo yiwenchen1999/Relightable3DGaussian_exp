@@ -40,6 +40,8 @@ pip install dearpygui imageio opencv-python pillow plyfile scipy
 # --- 3. PyTorch 2.x with CUDA 12 (H100-compatible) ---
 echo ""
 echo ">>> Step 3: Installing PyTorch 2.x + CUDA 12 ..."
+# Force install mkl to fix undefined symbol: iJIT_NotifyEvent
+conda install -y mkl mkl-include -c defaults
 conda install -y pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia
 
 # DEBUG: Check which torch is being picked up
