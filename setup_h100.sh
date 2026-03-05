@@ -81,6 +81,8 @@ echo ">>> Step 4: Installing torch_scatter ..."
 # Try PyG wheel index for current PyTorch/CUDA, else pip
 # NOTE: torch_scatter build requires pybind11, which might be missing from build env
 pip install pybind11
+# Set CPATH to include pybind11 headers
+export CPATH=$CONDA_PREFIX/include:$CPATH
 pip install torch_scatter --no-build-isolation
 
 # --- 5. kornia ---
