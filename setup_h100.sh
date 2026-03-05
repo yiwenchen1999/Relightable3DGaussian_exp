@@ -43,6 +43,7 @@ echo ">>> Step 3: Installing PyTorch 2.x + CUDA 12 ..."
 conda install -y pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia
 
 # DEBUG: Check which torch is being picked up
+export PYTHONNOUSERSITE=1
 python -c "
 import torch
 import sys
@@ -54,14 +55,14 @@ log_entry = {
     'sessionId': 'dcaa02',
     'timestamp': int(time.time() * 1000),
     'location': 'setup_h100.sh',
-    'message': 'Checking torch installation',
+    'message': 'Checking torch installation (NOUSERSITE)',
     'data': {
         'torch_version': torch.__version__,
         'torch_path': torch.__file__,
         'cuda_available': torch.cuda.is_available(),
         'cuda_version': torch.version.cuda,
         'sys_path': sys.path,
-        'hypothesisId': 'A'
+        'hypothesisId': 'B'
     }
 }
 print(f'DEBUG_LOG: {json.dumps(log_entry)}')
