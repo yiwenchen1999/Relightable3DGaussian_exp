@@ -19,6 +19,8 @@ if ! command -v conda &> /dev/null; then
     exit 1
 fi
 
+
+
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$PROJECT_DIR"
 
