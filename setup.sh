@@ -1,0 +1,1 @@
+conda activate /projects/vig/yiwenc/all_env/relightableGS
