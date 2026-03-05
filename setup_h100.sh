@@ -83,6 +83,10 @@ echo ">>> Step 4: Installing torch_scatter ..."
 pip install pybind11
 # Set CPATH to include pybind11 headers
 export CPATH=$CONDA_PREFIX/include:$CPATH
+export CPLUS_INCLUDE_PATH=$CONDA_PREFIX/include:$CPLUS_INCLUDE_PATH
+# Also set CFLAGS/CXXFLAGS just in case
+export CFLAGS="-I$CONDA_PREFIX/include $CFLAGS"
+export CXXFLAGS="-I$CONDA_PREFIX/include $CXXFLAGS"
 pip install torch_scatter --no-build-isolation
 
 # --- 5. kornia ---
